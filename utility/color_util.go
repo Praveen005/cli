@@ -22,8 +22,8 @@ func Yellow(value string) string {
 
 // Orange is the function to convert str to orange in console
 func Orange(value string) string {
-	newColor := color.FgYellow.Render
-	return newColor(value)
+	orangeColor := color.RGB(255, 165, 0, false)
+	return orangeColor.Sprint(value)
 }
 
 // Blue is the function to convert str to blue in console
