@@ -61,7 +61,7 @@ func init() {
 
 	firewallCreateCmd.PreRunE = func(cmd *cobra.Command, args []string) error {
 		if noDefaultRules {
-			createRules =false
+			createRules = false
 		}
 		return nil
 	}

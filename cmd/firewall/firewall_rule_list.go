@@ -1,6 +1,7 @@
 package firewall
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -48,6 +49,11 @@ If you wish to use a custom format, the available fields are:
 		firewallRules, err := client.ListFirewallRules(firewall.ID)
 		if err != nil {
 			utility.Error("%s", err)
+			os.Exit(1)
+		}
+
+		if len(firewallRules) == 0 {
+			fmt.Fprintf(os.Stderr, "Firewall '%v' has no rules, to create rules use command 'civo firewall rule create', \nfor example: civo firewall rule create test-issue -c '0.0.0.0/0' -s 443 -e 443 -l HTTPS\n", firewall.Name)
 			os.Exit(1)
 		}
 
