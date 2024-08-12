@@ -13,6 +13,7 @@ import (
 
 var firewallnetwork string
 var createRules bool
+var noDefaultRules bool
 var defaultNetwork *civogo.Network
 
 var firewallCreateCmd = &cobra.Command{

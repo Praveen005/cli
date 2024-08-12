@@ -41,6 +41,7 @@ func init() {
 
 	firewallCreateCmd.Flags().StringVarP(&firewallnetwork, "network", "n", "default", "the network to create the firewall")
 	firewallCreateCmd.Flags().BoolVarP(&createRules, "create-rules", "r", true, "the create rules flag is used to create the default firewall rules, if is not defined will be set to true")
+	firewallCreateCmd.Flags().BoolVarP(&noDefaultRules, "no-default-rules", "", false, "the no-default-rules flag will ensure no default rules are created for the firewall, if is not defined will be set to false")
 
 	// Firewalls rule cmd
 	FirewallCmd.AddCommand(firewallRuleCmd)
@@ -57,4 +58,11 @@ func init() {
 	firewallRuleCreateCmd.Flags().StringVarP(&action, "action", "a", "allow", "the action of the rule can be allow or deny (default is allow)")
 	firewallRuleCreateCmd.Flags().StringVarP(&label, "label", "l", "", "a string that will be the displayed as the name/reference for this rule")
 	firewallRuleCreateCmd.MarkFlagRequired("startport")
+
+	firewallCreateCmd.PreRunE = func(cmd *cobra.Command, args []string) error {
+		if noDefaultRules {
+			createRules =false
+		}
+		return nil
+	}
 }
