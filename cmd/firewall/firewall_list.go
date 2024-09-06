@@ -2,6 +2,7 @@ package firewall
 
 import (
 	"os"
+	"sort"
 	"strconv"
 
 	"github.com/civo/cli/common"
@@ -41,6 +42,10 @@ Example: civo firewall ls -o custom -f "ID: Name"`,
 			utility.Error("%s", err)
 			os.Exit(1)
 		}
+
+		sort.Slice(firewalls, func(i, j int) bool {
+			return firewalls[i].ID < firewalls[j].ID
+		})
 
 		networks, err := client.ListNetworks()
 		if err != nil {
